@@ -74,9 +74,9 @@ COPY --chmod=755 --chown=steam:steam shared/metamod-r/addons/metamod/metamod_i38
 COPY --chmod=755 --chown=steam:steam shared/metamod-r/addons/metamod/plugins.ini ${HLDS}/cstrike/addons/metamod/
 
 # Install ReUnion
-COPY --chmod=755 --chown=steam:steam shared/metamod-r/addons/reunion/reunion_mm_i386.so ${HLDS}/cstrike/addons/reunion/
+COPY --chmod=755 --chown=steam:steam shared/reunion/reunion_mm_i386.so ${HLDS}/cstrike/addons/reunion/
 
-COPY --chmod=755 --chown=steam:steam shared/metamod-r/addons/reunion/reunion.cfg ${HLDS}/cstrike/
+COPY --chmod=755 --chown=steam:steam shared/reunion/reunion.cfg ${HLDS}/cstrike/
 
 # Install ReVoice
 
