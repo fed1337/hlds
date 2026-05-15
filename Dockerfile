@@ -51,7 +51,7 @@ RUN mkdir -p ${HLDS}/logs && \
 
 
 # Add ReHLDS, Metamod-r, ReUnion, AmxModX and specific configs
-FROM hlds as hlds-classic
+FROM hlds AS hlds-classic
 
 ENV STEAMCMD=${HOME}/steamcmd
 ENV HLDS=${HOME}/hlds
@@ -64,7 +64,7 @@ COPY --chmod=755 --chown=steam:steam shared/rehlds/*.so .
 
 COPY --chmod=755 --chown=steam:steam shared/rehlds/hl* .
 
-COPY --chmod=755 --chown=steam:steam shared/rehlds/valve/dlls/director.so valve/dlls/director.so
+COPY --chmod=755 --chown=steam:steam shared/rehlds/valve/dlls/director.so valve/dlls/
 
 # Install Metamod-r
 RUN mkdir -p cstrike/addons/{metamod,reunion,revoice,amxmodx}
