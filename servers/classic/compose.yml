@@ -10,5 +10,3 @@ services:
       - "27015:27015/tcp"
       - "27015:27015/udp"
       - "26900:26900/udp"
-    volumes:
-      - ./server:/home/steam/hlds/
