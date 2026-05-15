@@ -60,23 +60,23 @@ ENV GLIBC_TUNABLES="glibc.rtld.execstack=2"
 WORKDIR "${HLDS}"
 
 # Install ReHLDS
-COPY --chmod=755 --chown=steam:steam shared/rehlds/*.so ${HLDS}
+COPY --chmod=755 --chown=steam:steam shared/rehlds/*.so .
 
-COPY --chmod=755 --chown=steam:steam shared/rehlds/hl* ${HLDS}
+COPY --chmod=755 --chown=steam:steam shared/rehlds/hl* .
 
-COPY --chmod=755 --chown=steam:steam shared/rehlds/valve/dlls/director.so ${HLDS}/valve/dlls/director.so
+COPY --chmod=755 --chown=steam:steam shared/rehlds/valve/dlls/director.so valve/dlls/director.so
 
 # Install Metamod-r
 RUN mkdir -p cstrike/addons/{metamod,reunion,revoice,amxmodx}
 
-COPY --chmod=755 --chown=steam:steam shared/metamod-r/addons/metamod/metamod_i386.so ${HLDS}/cstrike/addons/metamod/
+COPY --chmod=755 --chown=steam:steam shared/metamod-r/addons/metamod/metamod_i386.so cstrike/addons/metamod/
 
-COPY --chmod=755 --chown=steam:steam shared/metamod-r/addons/metamod/plugins.ini ${HLDS}/cstrike/addons/metamod/
+COPY --chmod=755 --chown=steam:steam shared/metamod-r/addons/metamod/plugins.ini cstrike/addons/metamod/
 
 # Install ReUnion
-COPY --chmod=755 --chown=steam:steam shared/reunion/reunion_mm_i386.so ${HLDS}/cstrike/addons/reunion/
+COPY --chmod=755 --chown=steam:steam shared/reunion/reunion_mm_i386.so cstrike/addons/reunion/
 
-COPY --chmod=755 --chown=steam:steam shared/reunion/reunion.cfg ${HLDS}/cstrike/
+COPY --chmod=755 --chown=steam:steam shared/reunion/reunion.cfg cstrike/
 
 # Install ReVoice
 
