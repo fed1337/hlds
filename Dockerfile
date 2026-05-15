@@ -1,3 +1,4 @@
+# Install steamcmd & user steam
 FROM debian:trixie-slim AS steamcmd
 
 ARG PID=1000
@@ -25,21 +26,21 @@ RUN apt-get update && \
 
 USER steam
 
+
+# Downloads hlds build 8684
 FROM steamcmd AS hlds
 
 ENV STEAMCMD=${HOME}/steamcmd
 ENV HLDS=${HOME}/hlds
-ENV GLIBC_TUNABLES="glibc.rtld.execstack=2"
 
-WORKDIR ${HLDS}
-
-RUN mkdir -p logs && \
+RUN mkdir -p ${HLDS}/logs && \
     "${STEAMCMD}/steamcmd.sh" \
     +force_install_dir "${HLDS}" \
     +login anonymous \
     +app_set_config 90 mod cstrike \
     +app_update 90 -beta steam_legacy validate \
     +quit && \
+    touch "${HLDS}/{banned.cfg,listip.cfg}" && \
     chmod +x "${HLDS}/hlds_run" && \
     rm -rf \
     ${STEAMCMD}/package \
@@ -47,6 +48,37 @@ RUN mkdir -p logs && \
     ${STEAMCMD}/linux32/steamcmd \
     ${HOME}/Steam/logs/* \
     ${HOME}/Steam/appcache/*
+
+
+# Add ReHLDS, Metamod-r, ReUnion, AmxModX and specific configs
+FROM hlds as hlds-classic
+
+ENV STEAMCMD=${HOME}/steamcmd
+ENV HLDS=${HOME}/hlds
+ENV GLIBC_TUNABLES="glibc.rtld.execstack=2"
+
+WORKDIR "${HLDS}"
+
+# Install ReHLDS
+COPY --chmod=755 --chown=steam:steam shared/rehlds/*.so ${HLDS}
+
+COPY --chmod=755 --chown=steam:steam shared/rehlds/hl* ${HLDS}
+
+COPY --chmod=755 --chown=steam:steam shared/rehlds/valve/dlls/director.so ${HLDS}/valve/dlls/director.so
+
+# Install Metamod-r
+RUN mkdir -p cstrike/addons/{metamod,reunion,revoice,amxmodx}
+
+COPY --chmod=755 --chown=steam:steam shared/metamod-r/addons/metamod/metamod_i386.so ${HLDS}/cstrike/addons/metamod/
+
+COPY --chmod=755 --chown=steam:steam shared/metamod-r/addons/metamod/plugins.ini ${HLDS}/cstrike/addons/metamod/
+
+# Install ReUnion
+COPY --chmod=755 --chown=steam:steam shared/metamod-r/addons/reunion/reunion_mm_i386.so ${HLDS}/cstrike/addons/reunion/
+
+COPY --chmod=755 --chown=steam:steam shared/metamod-r/addons/reunion/reunion.cfg ${HLDS}/cstrike/
+
+# Install ReVoice
 
 # server, rcon, vac respectively
 EXPOSE 27015/udp 27015/tcp 26900/udp
