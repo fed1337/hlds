@@ -73,6 +73,8 @@ COPY --chmod=755 --chown=steam:steam shared/metamod-r/addons/metamod/metamod_i38
 
 COPY --chmod=755 --chown=steam:steam shared/metamod-r/addons/metamod/plugins.ini cstrike/addons/metamod/
 
+COPY --chmod=755 --chown=steam:steam servers/classic/liblist.gam cstrike/liblist.gam
+
 # Install ReUnion
 COPY --chmod=755 --chown=steam:steam shared/reunion/reunion_mm_i386.so cstrike/addons/reunion/
 
